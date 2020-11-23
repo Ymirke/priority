@@ -4,22 +4,19 @@
 
 <style>
   :global(body) {
-    --dark: #1d1d1d;
-    --faded-white: hsl(0, 0%, 47%);
-    --sidePadding: 200px;
-    --topPadding: 50px;
-    --maxWidth: calc(100% - --sidePadding*2);
-    --maxHeight:calc(100vh - --sidePadding);
-
+    box-sizing: border-box;
+    --dark: rgb(19, 20, 23);
+    --faded-white: rgb(84, 87, 100);
+    --side-padding: 100px;
+    --maxWidth: calc(100% - --sidepadding*2);
+    --maxHeight: calc(100vh);
     margin: 0;
-    background-color:var(--dark);
+    background-color: var(--dark);
     color: var(--faded-white);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
-    font-size: 2rem;
-
   }
 </style>
 

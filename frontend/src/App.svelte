@@ -1,5 +1,5 @@
 <script lang="typescript">
-  import Dashboard from './Dashboard.svelte';
+  import Dashboard from './pages/Dashboard.svelte';
 </script>
 
 <style>

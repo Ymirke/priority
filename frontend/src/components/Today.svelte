@@ -1,7 +1,7 @@
 <script>
   import Task from './Task.svelte';
   import { tasks } from '../stores/tasks';
-
+  const priority = 'icons/priority.svg';
   let hoveringOverColumn = false;
 </script>
 
@@ -34,8 +34,8 @@
   .list {
     width: 100%;
   }
-  .focusButton{
-    background-color: rgb(97,0,255);
+  .focusButton {
+    background-color: #055ada;
     border: none;
     border-radius: 10px;
     width: 100%;
@@ -44,6 +44,23 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
     color: white;
+  }
+  .focusButton:hover {
+    background-color: #066aff; /* This color is really cool */
+    cursor: pointer;
+  }
+  .buttonImage {
+    filter: invert(1);
+    transform: scaleX(-1);
+    margin-left: 15px;
+  }
+  .buttonContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .noMargin{
+    margin: 0;
   }
 </style>
 
@@ -57,7 +74,16 @@
         {/if}
       {/each}
       {#if $tasks.filter((taskItem) => taskItem.status === 'Today').length > 0}
-        <button class="focusButton">Start priority session</button>
+        <button class="focusButton">
+          <div class="buttonContent">
+            <p class="noMargin">Start Focus Mode</p>
+            <img
+              class="buttonImage"
+              src={priority}
+              height="32px"
+              alt="Priority logo" />
+          </div>
+        </button>
       {/if}
     </div>
   </div>

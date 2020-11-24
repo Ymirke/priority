@@ -1,12 +1,12 @@
 <script lang="typescript">
   import { onMount } from 'svelte';
 
-  import { tasks } from './stores/tasks';
+  import { tasks } from '../stores/tasks';
 
-  import Later from './components/Later.svelte';
-  import ThisWeek from './components/ThisWeek.svelte';
-  import Today from './components/Today.svelte';
-  import Done from './components/Done.svelte';
+  import Later from '../components/Later.svelte';
+  import ThisWeek from '../components/ThisWeek.svelte';
+  import Today from '../components/Today.svelte';
+  import Done from '../components/Done.svelte';
 
   onMount(() => {
     tasks.set([

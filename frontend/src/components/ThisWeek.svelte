@@ -59,11 +59,13 @@
 
 {#if isOpen}
   <section class="section--open">
-    <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
-      <h3 class="sectionText--open">Done</h3>
+    <div class="list">
+      <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
+        <h3 class="sectionText--open">This week</h3>
+      </div>
     </div>
     {#each $tasks as task}
-      {#if task.status === 'Done'}
+      {#if task.status === 'This week'}
         <Task {task} />
       {/if}
     {/each}
@@ -71,7 +73,7 @@
 {:else}
   <section class="section--closed" on:click={toggleOpen}>
     <div class="sectionHeader">
-      <h3 class="sectionText--closed">Done</h3>
+      <h3 class="sectionText--closed">This Week</h3>
     </div>
   </section>
 {/if}

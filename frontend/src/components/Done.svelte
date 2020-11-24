@@ -24,6 +24,7 @@
   .section--closed {
     height: 100%;
     width: 125px;
+    flex-shrink: 0;
   }
   .sectionText--open {
     margin: 0px;
@@ -58,19 +59,21 @@
 
 {#if isOpen}
   <section class="section--open">
-    <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
-      <h3 class="sectionText--open">Later</h3>
+    <div class="list">
+      <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
+        <h3 class="sectionText--open">Done</h3>
+      </div>
+      {#each $tasks as task}
+        {#if task.status === 'Done'}
+          <Task {task} />
+        {/if}
+      {/each}
     </div>
-    {#each $tasks as task}
-      {#if task.status === 'Later'}
-        <Task {task}/>
-      {/if}
-    {/each}
   </section>
 {:else}
   <section class="section--closed" on:click={toggleOpen}>
     <div class="sectionHeader">
-      <h3 class="sectionText--closed">Later</h3>
+      <h3 class="sectionText--closed">Done</h3>
     </div>
   </section>
 {/if}

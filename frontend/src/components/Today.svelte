@@ -1,6 +1,8 @@
 <script>
   import Task from './Task.svelte';
   import { tasks } from '../stores/tasks';
+
+  let hoveringOverColumn = false;
 </script>
 
 <style>
@@ -23,14 +25,25 @@
     margin-left: auto;
   }
   .container {
-    margin-left: 100px;
-    margin-right: 100px;
-    min-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
     justify-content: center;
     align-items: center;
   }
   .list {
     width: 100%;
+  }
+  .focusButton{
+    background-color: rgb(97,0,255);
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 700;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: white;
   }
 </style>
 
@@ -39,10 +52,13 @@
     <h3>Today</h3>
     <div class="list">
       {#each $tasks as task}
-        {#if task.status === 'This week'}
+        {#if task.status === 'Today'}
           <Task {task} />
         {/if}
       {/each}
+      {#if $tasks.filter((taskItem) => taskItem.status === 'Today').length > 0}
+        <button class="focusButton">Start priority session</button>
+      {/if}
     </div>
   </div>
 </section>

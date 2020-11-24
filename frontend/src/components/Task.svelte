@@ -5,11 +5,19 @@
     id: 100,
     text: 'hello',
     status: 'Done',
-  }
+  };
+
+  const dragStart: (event: DragEvent, taskId: number) => void = (
+    event,
+    taskId
+  ) => {
+    if (event.dataTransfer)
+      event.dataTransfer.setData('text/plain', JSON.stringify(taskId));
+  };
 </script>
 
 <style>
-  div{
+  div {
     color: white;
     font-size: 1.2rem;
     margin-top: 5px;
@@ -24,11 +32,15 @@
 
     border-radius: 5px;
   }
-  div:hover{
+  div:hover {
     background-color: var(--select);
   }
 </style>
 
-<div>
-  {task.id} - {task.text} - {task.status}
+<div draggable={true} on:dragstart={(event) => dragStart(event, task.id)}>
+  {task.id}
+  -
+  {task.text}
+  -
+  {task.status}
 </div>

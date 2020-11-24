@@ -16,14 +16,24 @@
         id: 1,
       },
       {
-        text: 'This is item #1',
+        text: 'This is item #2',
         status: 'Later',
         id: 2,
       },
       {
-        text: 'This is item #1',
+        text: 'This is item #3',
         status: 'Later',
         id: 3,
+      },
+      {
+        text: 'This is item #4',
+        status: 'This week',
+        id: 4,
+      },
+      {
+        text: 'This is item #5',
+        status: 'Done',
+        id: 5,
       },
     ]);
   })

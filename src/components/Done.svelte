@@ -1,4 +1,7 @@
-<script>
+<script lang="typescript">
+  import Task from './Task.svelte';
+  import { tasks } from '../stores/tasks';
+
   let isOpen = false;
 
   const toggleOpen = () => {
@@ -11,40 +14,64 @@
     display: flex;
     flex-direction: column;
     height: var(--maxHeight);
-    border-left: 1px solid var(--faded-white);
+    border-right: 1px solid var(--gray);
+    flex-shrink: 0;
   }
-  .sectionTextOpen {
-    margin-top: 42px;
-    font-size: 2rem;
-    margin-right: auto;
-    margin-left: auto;
+  .section--open {
+    min-width: 600px;
+    width: 25%;
   }
-  .sectionTextClosed {
-    margin-top: 50px;
-    margin-right: auto;
-    margin-left: auto;
-  }
-  .sectionOpen {
-    width: 30%;
-  }
-  .sectionClosed {
+  .section--closed {
     height: 100%;
     width: 125px;
     flex-shrink: 0;
   }
-  .sectionClosed:hover {
+  .sectionText--open {
+    margin: 0px;
+    font-size: 2rem;
+  }
+  .sectionText--closed {
+    margin-top: 8px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .section--closed:hover {
     cursor: pointer;
-    background-color: rgb(24, 25, 28);
+    background-color: var(--select);
+  }
+  .sectionHeader {
+    user-select: none;
+    margin-top: 42px;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+  }
+  .sectionHeader--open {
+    margin-top: 37px !important;
+  }
+  .sectionHeader--open:hover {
+    cursor: pointer;
+    background-color: var(--select);
   }
 </style>
 
 {#if isOpen}
-  <section class="sectionOpen">
-    <h3 class="sectionTextOpen">Done</h3>
-    <p on:click={toggleOpen}>X</p>
+  <section class="section--open">
+    <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
+      <h3 class="sectionText--open">Done</h3>
+    </div>
+    {#each $tasks as task}
+      {#if task.status === 'Done'}
+        <Task {task} />
+      {/if}
+    {/each}
   </section>
 {:else}
-  <section class="sectionClosed" on:click={toggleOpen}>
-    <h3 class="sectionTextClosed">Done</h3>
+  <section class="section--closed" on:click={toggleOpen}>
+    <div class="sectionHeader">
+      <h3 class="sectionText--closed">Done</h3>
+    </div>
   </section>
 {/if}

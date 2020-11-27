@@ -2,7 +2,7 @@
   import Task from './Task.svelte';
   import { tasks } from '../stores/tasks';
 
-  let isOpen = false;
+  let isOpen = true;
 
   const toggleOpen = () => {
     isOpen = !isOpen;
@@ -14,12 +14,10 @@
     display: flex;
     flex-direction: column;
     height: var(--maxHeight);
-    border-right: 1px solid var(--gray);
     flex-shrink: 0;
   }
   .section--open {
-    min-width: 600px;
-    width: 25%;
+    max-width: 20%;
   }
   .section--closed {
     height: 100%;
@@ -63,10 +61,8 @@
       <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
         <h3 class="sectionText--open">Done</h3>
       </div>
-      {#each $tasks as task}
-        {#if task.status === 'Done'}
-          <Task {task} />
-        {/if}
+      {#each $tasks.done as task}
+        <Task {task} />
       {/each}
     </div>
   </section>

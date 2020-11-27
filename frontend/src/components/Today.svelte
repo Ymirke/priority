@@ -2,7 +2,6 @@
   import Task from './Task.svelte';
   import { tasks } from '../stores/tasks';
   const priority = 'icons/priority.svg';
-  let hoveringOverColumn = false;
 </script>
 
 <style>
@@ -15,6 +14,7 @@
   }
   section {
     display: flex;
+    width: 500px;
     height: var(--maxHeight);
     border-right: 1px solid var(--gray);
   }
@@ -24,15 +24,24 @@
     margin-right: auto;
     margin-left: auto;
   }
-  .container {
-    margin-left: auto;
-    margin-right: auto;
-    width: 900px;
-    justify-content: center;
+  .sectionHeader {
+    user-select: none;
+    margin-top: 42px;
+    margin-bottom: 10px;
     align-items: center;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+  }
+  .sectionHeader--open {
+    margin-top: 37px !important;
+  }
+  .sectionText--open {
+    margin: 0px;
+    font-size: 2rem;
   }
   .list {
-    width: 100%;
+    width: auto;
   }
   .focusButton {
     background-color: #055ada;
@@ -54,37 +63,35 @@
     transform: scaleX(-1);
     margin-left: 15px;
   }
-  .buttonContent{
+  .buttonContent {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .noMargin{
+  .noMargin {
     margin: 0;
   }
 </style>
 
 <section>
-  <div class="container">
-    <h3>Today</h3>
-    <div class="list">
-      {#each $tasks as task}
-        {#if task.status === 'Today'}
-          <Task {task} />
-        {/if}
-      {/each}
-      {#if $tasks.filter((taskItem) => taskItem.status === 'Today').length > 0}
-        <button class="focusButton">
-          <div class="buttonContent">
-            <p class="noMargin">Start Focus Mode</p>
-            <img
-              class="buttonImage"
-              src={priority}
-              height="32px"
-              alt="Priority logo" />
-          </div>
-        </button>
-      {/if}
-    </div>
+  <div class="sectionHeader sectionHeader--open">
+    <h3 class="sectionText--open">Today</h3>
+  </div>
+  <div class="list">
+    {#each $tasks.today as task}
+      <Task {task} />
+    {/each}
+    {#if $tasks.today.length > 0}
+      <button class="focusButton">
+        <div class="buttonContent">
+          <p class="noMargin">Start Focus Mode</p>
+          <img
+            class="buttonImage"
+            src={priority}
+            height="32px"
+            alt="Priority logo" />
+        </div>
+      </button>
+    {/if}
   </div>
 </section>

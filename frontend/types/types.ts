@@ -1,5 +1,11 @@
 export type taskType = {
   text: string;
-  status: 'Later' | 'This week' | 'Today' | 'Done';
   id: number;
+}
+
+export type dashboardStateType = {
+  later: taskType[],
+  thisWeek: taskType[],
+  today: taskType[],
+  done: taskType[],
 }

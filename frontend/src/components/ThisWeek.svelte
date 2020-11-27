@@ -2,7 +2,7 @@
   import Task from './Task.svelte';
   import { tasks } from '../stores/tasks';
 
-  let isOpen = false;
+  let isOpen = true;
 
   const toggleOpen = () => {
     isOpen = !isOpen;
@@ -18,8 +18,7 @@
     flex-shrink: 0;
   }
   .section--open {
-    min-width: 600px;
-    width: 25%;
+    max-width: 600px;
   }
   .section--closed {
     height: 100%;
@@ -64,10 +63,8 @@
         <h3 class="sectionText--open">This week</h3>
       </div>
     </div>
-    {#each $tasks as task}
-      {#if task.status === 'This week'}
-        <Task {task} />
-      {/if}
+    {#each $tasks.thisWeek as task}
+      <Task {task} />
     {/each}
   </section>
 {:else}

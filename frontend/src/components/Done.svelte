@@ -1,4 +1,24 @@
 <script lang="typescript">
+
+  const flipDurationMs = 200;
+  import { flip } from 'svelte/animate';
+  import { dndzone } from 'svelte-dnd-action';
+
+  const consider = (event: any) => {
+    console.log(event.detail);
+    tasks.update((taskData) => {
+      taskData.later = event.detail.items;
+      return taskData;
+    });
+  };
+
+  const finalize = (event: any) => {
+    tasks.update((taskData) => {
+      taskData.later = event.detail.items;
+      return taskData;
+    });
+  };
+
   import Task from './Task.svelte';
   import { tasks } from '../stores/tasks';
 
@@ -57,10 +77,14 @@
 
 {#if isOpen}
   <section class="section--open">
-    <div class="list">
-      <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
-        <h3 class="sectionText--open">Done</h3>
-      </div>
+    <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
+      <h3 class="sectionText--open">Done</h3>
+    </div>
+    <div
+      use:dndzone={{ items: $tasks.later, flipDurationMs, dropTargetStyle: { outline: 'rgba(255, 255, 255, 0.1) solid 1px' } }}
+      on:consider={(event) => consider(event)}
+      on:finalize={(event) => finalize(event)}
+      class="list">
       {#each $tasks.done as task}
         <Task {task} />
       {/each}

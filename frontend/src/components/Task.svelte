@@ -1,34 +1,15 @@
 <script lang="typescript">
   import type { taskType } from '../../types/types';
 
-  export let task: taskType = {
-    id: 100,
-    text: 'hello',
-  };
+  export let task: taskType;
 
-  const dragStart: (event: DragEvent, taskId: number) => void = (
-    event,
-    taskId
-  ) => {
-    if (event.dataTransfer)
-      event.dataTransfer.setData('text/plain', JSON.stringify(taskId));
-  };
-
-  const drop: (event: DragEvent, taskId: number) => void = (
-    event,
-    taskId
-  ) => {
-    if (!event.dataTransfer) return;
-    const json = event.dataTransfer.getData("text/plain");
-    const data = JSON.parse(json);
-    
-
-    
+  const handleClick = () => {
+    console.log('click');
   };
 </script>
 
 <style>
-  div {
+  .task {
     color: white;
     font-size: 1.2rem;
 
@@ -42,14 +23,13 @@
 
     border-radius: 5px;
   }
-  div:hover {
+  .task:hover {
     background-color: var(--select);
   }
 </style>
 
 <div
-  draggable={true}
-  on:dragstart={(event) => dragStart(event, task.id)}
-  on:drop={(event) => drop(event, task.id)}>
+  on:click={handleClick}
+  class="task">
   {task.text}
 </div>

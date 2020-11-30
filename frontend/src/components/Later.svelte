@@ -1,6 +1,24 @@
 <script lang="typescript">
-  import Task from './Task.svelte';
+  import { flip } from 'svelte/animate';
+  import { dndzone } from 'svelte-dnd-action';
+
   import { tasks } from '../stores/tasks';
+
+  const flipDurationMs = 200;
+
+  const consider = (event: any) => {
+    tasks.update((taskData) => {
+      taskData.later = event.detail.items;
+      return taskData;
+    });
+  };
+
+  const finalize = (event: any) => {
+    tasks.update((taskData) => {
+      taskData.later = event.detail.items;
+      return taskData;
+    });
+  };
 
   let isOpen = true;
 
@@ -53,16 +71,42 @@
     cursor: pointer;
     background-color: var(--select);
   }
+  .task {
+    color: white;
+    font-size: 1.2rem;
+
+    margin-right: 5px;
+    margin-left: 5px;
+
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+
+    border-radius: 5px;
+  }
+  .task:hover {
+    background-color: var(--select);
+  }
 </style>
 
 {#if isOpen}
   <section class="section--open">
-    <div class="list">
-      <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
-        <h3 class="sectionText--open">Later</h3>
-      </div>
-      {#each $tasks.later as task}
-        <Task {task} />
+    <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
+      <h3 class="sectionText--open">Later</h3>
+    </div>
+    <div
+      use:dndzone={{ items: $tasks.later, flipDurationMs, dropTargetStyle: { outline: 'rgba(255, 255, 255, 0.1) solid 1px' } }}
+      on:consider={(event) => consider(event)}
+      on:finalize={(event) => finalize(event)}
+      class="list">
+      {#each $tasks.later as task (task.id)}
+        <div
+          on:click={() => console.log('Click!')}
+          animate:flip={{ duration: flipDurationMs }}
+          class="task">
+          {task.text}
+        </div>
       {/each}
     </div>
   </section>

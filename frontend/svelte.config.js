@@ -6,4 +6,5 @@ module.exports = {
       script: 'typescript',
     },
   }),
+  svelteSortOrder: 'scripts-markup-styles',
 };

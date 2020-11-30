@@ -58,14 +58,14 @@
 
 {#if isOpen}
   <section class="section--open">
-    <div class="list">
-      <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
-        <h3 class="sectionText--open">This week</h3>
-      </div>
+    <div on:click={toggleOpen} class="sectionHeader sectionHeader--open">
+      <h3 class="sectionText--open">This week</h3>
     </div>
-    {#each $tasks.thisWeek as task}
-      <Task {task} />
-    {/each}
+    <div class="list">
+      {#each $tasks.thisWeek as task}
+        <Task {task} />
+      {/each}
+    </div>
   </section>
 {:else}
   <section class="section--closed" on:click={toggleOpen}>

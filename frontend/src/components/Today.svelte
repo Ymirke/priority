@@ -81,17 +81,17 @@
     {#each $tasks.today as task}
       <Task {task} />
     {/each}
-    {#if $tasks.today.length > 0}
-      <button class="focusButton">
-        <div class="buttonContent">
-          <p class="noMargin">Start Focus Mode</p>
-          <img
-            class="buttonImage"
-            src={priority}
-            height="32px"
-            alt="Priority logo" />
-        </div>
-      </button>
-    {/if}
   </div>
+  {#if $tasks.today.length > 0}
+    <button class="focusButton">
+      <div class="buttonContent">
+        <p class="noMargin">Start Focus Mode</p>
+        <img
+          class="buttonImage"
+          src={priority}
+          height="32px"
+          alt="Priority logo" />
+      </div>
+    </button>
+  {/if}
 </section>

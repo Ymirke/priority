@@ -3,9 +3,10 @@ export type taskType = {
   id: number;
 }
 
-export type dashboardStateType = {
-  later: taskType[],
-  thisWeek: taskType[],
-  today: taskType[],
-  done: taskType[],
+export type columnType = {
+  id: number;
+  name: string;
+  tasks: taskType[];
 }
+
+export type dashboardStateType = columnType[];

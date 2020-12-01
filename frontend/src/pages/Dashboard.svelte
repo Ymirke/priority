@@ -5,79 +5,38 @@
   const flipDurationMs = 100;
   const priority = 'icons/priority.svg';
 
-  let data = [
-    {
-      id: 1,
-      name: 'Later',
-      items: [
-        { id: 1, name: 'item1' },
-        { id: 2, name: 'item2' },
-        { id: 3, name: 'item3' },
-        { id: 4, name: 'item4' },
-        { id: 5, name: 'item5' },
-      ],
-    },
-    {
-      id: 2,
-      name: 'This week',
-      items: [
-        { id: 6, name: 'item6' },
-        { id: 7, name: 'item7' },
-        { id: 8, name: 'item8' },
-        { id: 9, name: 'item9' },
-        { id: 10, name: 'item10' },
-      ],
-    },
-    {
-      id: 3,
-      name: 'Today',
-      items: [
-        { id: 11, name: 'item11' },
-        { id: 12, name: 'item12' },
-        { id: 13, name: 'item13' },
-        { id: 14, name: 'item14' },
-        { id: 15, name: 'item15' },
-      ],
-    },
-    {
-      id: 4,
-      name: 'Done',
-      items: [
-        { id: 16, name: 'item16' },
-        { id: 17, name: 'item17' },
-        { id: 18, name: 'item18' },
-        { id: 19, name: 'item19' },
-        { id: 20, name: 'item20' },
-      ],
-    },
-  ];
-
-  function considerTask(event, columnId) {
+  import type { dashboardStateType } from '../../types/types';
+  export let data: dashboardStateType;
+  
+  export let startFocusMode: () => void;
+  
+  // Helpers
+  function considerTask(event, columnId: number) {
     const columnIndex = data.findIndex((column) => column.id === columnId);
-    data[columnIndex].items = event.detail.items;
+    data[columnIndex].tasks = event.detail.items;
     data = [...data];
   }
 
-  function finalizeTask(event, columnId) {
+  function finalizeTask(event, columnId: number) {
     const columnIndex = data.findIndex((column) => column.id === columnId);
-    data[columnIndex].items = event.detail.items;
+    data[columnIndex].tasks = event.detail.items;
     data = [...data];
   }
 
-  function changeTaskText(columnId, taskId) {
+  function changeTaskText(columnId: number, taskId: number) {
     const columnIndex = data.findIndex((column) => column.id === columnId);
-    const taskIndex = data[columnIndex].items.findIndex(
+    const taskIndex = data[columnIndex].tasks.findIndex(
       (task) => task.id === taskId
     );
 
     const entry = prompt(
       'Change Task Text To:',
-      data[columnIndex].items[taskIndex].name
+      data[columnIndex].tasks[taskIndex].text
     );
     if (entry === '' || entry === null) return;
     // validate - cloud functions.
 
-    data[columnIndex].items[taskIndex].name = entry;
+    data[columnIndex].tasks[taskIndex].text = entry;
     data = [...data];
   }
 </script>
@@ -204,17 +163,17 @@
         <div class="column__title">{column.name}</div>
         <div
           class="column__content column__content--today"
-          use:dndzone={{ items: column.items, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
+          use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
           on:consider={(event) => considerTask(event, column.id)}
           on:finalize={(event) => finalizeTask(event, column.id)}>
-          {#each column.items as item (item.id)}
+          {#each column.tasks as task (task.id)}
             <div animate:flip={{ duration: flipDurationMs }} class="task">
-              {item.name}
+              {task.text}
             </div>
           {/each}
         </div>
-        {#if column.items.length > 0}
-          <button class="focusButton">
+        {#if column.tasks.length > 0}
+          <button on:click={startFocusMode} class="focusButton">
             <div class="buttonContent">
               <p class="noMargin">Start Focus Mode</p>
               <img
@@ -231,17 +190,15 @@
         <div class="column__title">{column.name}</div>
         <div
           class="column__content"
-          use:dndzone={{ items: column.items, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
+          use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
           on:consider={(event) => considerTask(event, column.id)}
           on:finalize={(event) => finalizeTask(event, column.id)}>
-          {#each column.items as item (item.id)}
+          {#each column.tasks as task (task.id)}
             <div
-              on:click={() => changeTaskText(column.id, item.id)}
+              on:click={() => changeTaskText(column.id, task.id)}
               animate:flip={{ duration: flipDurationMs }}
               class="task">
-              {item.id}
-              -
-              {item.name}
+              {task.text}
             </div>
           {/each}
         </div>

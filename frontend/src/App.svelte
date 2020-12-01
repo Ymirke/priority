@@ -8,6 +8,7 @@
     --dark: rgb(19, 20, 23);
     --gray: rgb(84, 87, 100);
     --select: rgb(24, 25, 28);
+    --primary: #066aff;
     margin: 0;
     background-color: var(--dark);
     color: var(--gray);

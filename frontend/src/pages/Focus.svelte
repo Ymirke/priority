@@ -10,7 +10,7 @@
   const base = 'Priority - ';
 
   $: seconds, getDisplayTime();
-  $: displayTime, document.title = `${base}${displayTime}`;
+  $: displayTime, (document.title = `${base}${displayTime}`);
 
   const getDisplayTime: () => void = () => {
     const hours = Math.floor(seconds / (60 * 60));
@@ -33,7 +33,7 @@
     };
 
     if (seconds < 60) {
-      return displayTime = `${displayHours()}:${displayMinutes()}:${displaySeconds()}`;
+      return (displayTime = `${displayHours()}:${displayMinutes()}:${displaySeconds()}`);
     }
 
     displayTime = `${displayHours()}:${displayMinutes()}`;
@@ -44,10 +44,11 @@
   onDestroy(() => {
     clearInterval(interval);
     document.title = 'Priority';
+    window.onbeforeunload = function () {};
   });
 
-  window.onbeforeunload = function (e) {
-    return 'Please press the Logout button to logout.';
+  window.onbeforeunload = function () {
+    return 'Timer running';
   };
 </script>
 

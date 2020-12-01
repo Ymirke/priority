@@ -31,4 +31,4 @@ const generateItems = () => {
 
 generateItems();
 
-export const tasks = writable(initState);
+export let tasks = writable(initState);

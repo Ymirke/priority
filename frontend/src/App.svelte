@@ -3,14 +3,36 @@
   import Focus from './pages/Focus.svelte';
 
   let focusMode = true;
-
   const startFocusMode: () => void = () => {
     focusMode = true;
-  }
-
+  };
   const endFocusMode: () => void = () => {
     focusMode = false;
-  }
+  };
+
+  const moveItemRight = (columnId: number, taskId: number) => {
+    const columnIndex = data.findIndex((column) => column.id === columnId);
+    const taskIndex = data[columnIndex].tasks.findIndex(
+      (task) => task.id === taskId
+    );
+
+    const removedItems = data[columnIndex].tasks.splice(taskIndex, 1);
+    data[columnIndex + 1].tasks.unshift(removedItems[0]);
+
+    data = [...data];
+  };
+
+  // const moveItemLeft = (columnId: number, taskId: number) => {
+  //   const columnIndex = data.findIndex((column) => column.id === columnId);
+  //   const taskIndex = data[columnIndex].tasks.findIndex(
+  //     (task) => task.id === taskId
+  //   );
+
+  //   const removedItems = data[columnIndex].tasks.splice(taskIndex, 1);
+  //   data[columnIndex - 1].tasks.unshift(removedItems[0]);
+
+  //   data = [...data];
+  // }
 
   let data = [
     {
@@ -78,7 +100,7 @@
 </style>
 
 {#if focusMode}
-  <Focus {data} {endFocusMode} />
+  <Focus {data} {endFocusMode} {moveItemRight} />
 {:else}
   <Dashboard {data} {startFocusMode} />
 {/if}

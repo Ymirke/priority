@@ -3,6 +3,7 @@
   import type { dashboardStateType } from '../../types/types';
   export let data: dashboardStateType;
   export let endFocusMode: () => void;
+  export let moveItemRight: (columnId: number, taskId: number) => void;
 
   let seconds = 0;
   let displayTime = '';
@@ -84,7 +85,7 @@
     <div>
       <!-- List component here. -->
       {#each data[2].tasks as task (task.id)}
-        <div>{task.text}</div>
+        <div>{task.text}-- <button on:click={() => moveItemRight(3, task.id)}>complete me!</button></div>
       {/each}
     </div>
   </section>

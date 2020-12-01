@@ -175,7 +175,7 @@
         {#if column.tasks.length > 0}
           <button on:click={startFocusMode} class="focusButton">
             <div class="buttonContent">
-              <p class="noMargin">Start Focus Mode</p>
+              <p class="noMargin">Prioritize</p>
               <img
                 class="buttonImage"
                 src={priority}

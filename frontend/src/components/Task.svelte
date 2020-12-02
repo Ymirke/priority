@@ -31,5 +31,7 @@
 <div
   on:click={handleClick}
   class="task">
-  {task.text}
+  <p>
+    {task.text}
+  </p>
 </div>

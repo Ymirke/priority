@@ -1,29 +1,23 @@
 <script lang="typescript">
   import { flip } from 'svelte/animate';
   import { dndzone } from 'svelte-dnd-action';
+  import TaskStore from '../stores/tasks';
+
+  import type { dashboardStateType } from '../../types/types';
+  let data: dashboardStateType;
+
+  TaskStore.subscribe((taskData) => {
+    data = taskData;
+  });
 
   const flipDurationMs = 100;
   const priority = 'icons/priority.svg';
-
-  import type { dashboardStateType } from '../../types/types';
-  export let data: dashboardStateType;
-  
   export let startFocusMode: () => void;
-  
-  // Helpers
-  function considerTask(event, columnId: number) {
-    const columnIndex = data.findIndex((column) => column.id === columnId);
-    data[columnIndex].tasks = event.detail.items;
-    data = [...data];
-  }
 
-  function finalizeTask(event, columnId: number) {
-    const columnIndex = data.findIndex((column) => column.id === columnId);
-    data[columnIndex].tasks = event.detail.items;
-    data = [...data];
-  }
-
-  function changeTaskText(columnId: number, taskId: number) {
+  const changeTaskText: (columnId: number, taskId: number) => void = (
+    columnId,
+    taskId
+  ) => {
     const columnIndex = data.findIndex((column) => column.id === columnId);
     const taskIndex = data[columnIndex].tasks.findIndex(
       (task) => task.id === taskId
@@ -34,9 +28,20 @@
       data[columnIndex].tasks[taskIndex].text
     );
     if (entry === '' || entry === null) return;
-    // validate - cloud functions.
 
     data[columnIndex].tasks[taskIndex].text = entry;
+    data = [...data];
+  };
+
+  function considerTask(event, columnId: number) {
+    const columnIndex = data.findIndex((column) => column.id === columnId);
+    data[columnIndex].tasks = event.detail.items;
+    data = [...data];
+  }
+
+  function finalizeTask(event, columnId: number) {
+    const columnIndex = data.findIndex((column) => column.id === columnId);
+    data[columnIndex].tasks = event.detail.items;
     data = [...data];
   }
 </script>
@@ -62,7 +67,8 @@
     font-size: 28px;
     margin-bottom: 1rem;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    margin-left: 25px;
     align-items: center;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -88,6 +94,7 @@
   }
   .task {
     color: white;
+    background-color: var(--dark);
     font-size: 1.2rem;
 
     margin-top: 5px;
@@ -105,8 +112,7 @@
     background-color: var(--select);
   }
   .task:focus {
-    background-color: var(--select);
-    box-shadow: 0 0 1px 1px white;
+    box-shadow: 0 0 1px 1px var(--gray);
     outline: none;
   }
   @media (max-width: 1100px) {

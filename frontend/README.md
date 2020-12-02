@@ -1,2 +1,1 @@
-# Priority
-prioritize-link
+# Prioritize

@@ -2,7 +2,7 @@
   import Dashboard from './pages/Dashboard.svelte';
   import Focus from './pages/Focus.svelte';
 
-  let focusMode = true;
+  let focusMode = false;
   const startFocusMode: () => void = () => {
     focusMode = true;
   };
@@ -22,64 +22,17 @@
     data = [...data];
   };
 
-  // const moveItemLeft = (columnId: number, taskId: number) => {
-  //   const columnIndex = data.findIndex((column) => column.id === columnId);
-  //   const taskIndex = data[columnIndex].tasks.findIndex(
-  //     (task) => task.id === taskId
-  //   );
+  const moveItemLeft = (columnId: number, taskId: number) => {
+    const columnIndex = data.findIndex((column) => column.id === columnId);
+    const taskIndex = data[columnIndex].tasks.findIndex(
+      (task) => task.id === taskId
+    );
 
-  //   const removedItems = data[columnIndex].tasks.splice(taskIndex, 1);
-  //   data[columnIndex - 1].tasks.unshift(removedItems[0]);
+    const removedItems = data[columnIndex].tasks.splice(taskIndex, 1);
+    data[columnIndex - 1].tasks.unshift(removedItems[0]);
 
-  //   data = [...data];
-  // }
-
-  let data = [
-    {
-      id: 1,
-      name: 'Later',
-      tasks: [
-        { id: 1, text: 'item1' },
-        { id: 2, text: 'item2' },
-        { id: 3, text: 'item3' },
-        { id: 4, text: 'item4' },
-        { id: 5, text: 'item5' },
-      ],
-    },
-    {
-      id: 2,
-      name: 'This week',
-      tasks: [
-        { id: 6, text: 'item6' },
-        { id: 7, text: 'item7' },
-        { id: 8, text: 'item8' },
-        { id: 9, text: 'item9' },
-        { id: 10, text: 'item10' },
-      ],
-    },
-    {
-      id: 3,
-      name: 'Today',
-      tasks: [
-        { id: 11, text: 'item11' },
-        { id: 12, text: 'item12' },
-        { id: 13, text: 'item13' },
-        { id: 14, text: 'item14' },
-        { id: 15, text: 'item15' },
-      ],
-    },
-    {
-      id: 4,
-      name: 'Done',
-      tasks: [
-        { id: 16, text: 'item16' },
-        { id: 17, text: 'item17' },
-        { id: 18, text: 'item18' },
-        { id: 19, text: 'item19' },
-        { id: 20, text: 'item20' },
-      ],
-    },
-  ];
+    data = [...data];
+  }
 </script>
 
 <style>
@@ -100,7 +53,7 @@
 </style>
 
 {#if focusMode}
-  <Focus {data} {endFocusMode} {moveItemRight} />
+  <Focus {endFocusMode} {moveItemRight} />
 {:else}
-  <Dashboard {data} {startFocusMode} />
+  <Dashboard {startFocusMode} />
 {/if}

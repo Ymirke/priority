@@ -1,7 +1,14 @@
 <script>
   import { onDestroy } from 'svelte';
   import type { dashboardStateType } from '../../types/types';
-  export let data: dashboardStateType;
+  import TaskStore from '../stores/tasks';
+  let data: dashboardStateType;
+
+  TaskStore.subscribe(taskData => {
+    data = taskData
+  })
+
+
   export let endFocusMode: () => void;
   export let moveItemRight: (columnId: number, taskId: number) => void;
 

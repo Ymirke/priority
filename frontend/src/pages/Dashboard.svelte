@@ -2,6 +2,7 @@
   import { flip } from 'svelte/animate';
   import { dndzone } from 'svelte-dnd-action';
   import TaskStore from '../stores/tasks';
+  import Task from '../components/Task.svelte';
 
   import type { dashboardStateType } from '../../types/types';
   let data: dashboardStateType;
@@ -92,26 +93,16 @@
     box-shadow: 0 0 1px 1px rgb(52, 52, 52);
     outline: none;
   }
-  .task {
-    color: white;
+  .task__container {
     background-color: var(--dark);
-    font-size: 1.2rem;
-
-    margin-top: 5px;
-    margin-right: 5px;
     margin-left: 5px;
-
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-
+    margin-right: 5px;
     border-radius: 5px;
   }
-  .task:hover {
+  .task__container:hover {
     background-color: var(--select);
   }
-  .task:focus {
+  .task__container:focus {
     box-shadow: 0 0 1px 1px var(--gray);
     outline: none;
   }
@@ -173,8 +164,10 @@
           on:consider={(event) => considerTask(event, column.id)}
           on:finalize={(event) => finalizeTask(event, column.id)}>
           {#each column.tasks as task (task.id)}
-            <div animate:flip={{ duration: flipDurationMs }} class="task">
-              {task.text}
+            <div
+              animate:flip={{ duration: flipDurationMs }}
+              class="task__container">
+              <Task {task} columnId={column.id} />
             </div>
           {/each}
         </div>
@@ -200,11 +193,8 @@
           on:consider={(event) => considerTask(event, column.id)}
           on:finalize={(event) => finalizeTask(event, column.id)}>
           {#each column.tasks as task (task.id)}
-            <div
-              on:click={() => changeTaskText(column.id, task.id)}
-              animate:flip={{ duration: flipDurationMs }}
-              class="task">
-              {task.text}
+            <div class="task__container">
+              <Task {task} columnId={column.id} />
             </div>
           {/each}
         </div>

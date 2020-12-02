@@ -4,7 +4,7 @@
   import TaskStore from '../stores/tasks';
   import Task from '../components/Task.svelte';
 
-  import type { dashboardStateType } from '../../types/types';
+  import type { dashboardStateType } from '../types';
   let data: dashboardStateType;
 
   TaskStore.subscribe((taskData) => {
@@ -49,7 +49,7 @@
 
 <style>
   main {
-    height: 100vh;
+    height: 90vh;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -90,11 +90,12 @@
     display: none; /* Chrome, Safari, Opera */
   }
   .column__content:focus {
-    box-shadow: 0 0 1px 1px rgb(52, 52, 52);
     outline: none;
   }
   .task__container {
     background-color: var(--dark);
+    margin-top: 1px;
+    margin-bottom: 1px;
     margin-left: 5px;
     margin-right: 5px;
     border-radius: 5px;
@@ -137,6 +138,10 @@
   .focusButton:hover {
     background-color: #066aff; /* This color is really cool */
     cursor: pointer;
+  }
+  .focusButton:focus{
+    box-shadow: 0 0 1px 5px var(--primary);
+    outline: none;
   }
   .buttonImage {
     filter: invert(1);

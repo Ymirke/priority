@@ -1,5 +1,5 @@
 <script lang="typescript">
-  import type { taskType, dashboardStateType } from '../../types/types';
+  import type { taskType, dashboardStateType } from '../types';
   
   import TaskStore from '../stores/tasks';
 

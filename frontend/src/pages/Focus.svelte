@@ -1,6 +1,6 @@
 <script>
   import { onDestroy } from 'svelte';
-  import type { dashboardStateType } from '../../types/types';
+  import type { dashboardStateType } from '../types';
   import TaskStore from '../stores/tasks';
   let data: dashboardStateType;
 

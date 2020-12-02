@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-import type { dashboardStateType } from '../../types/types';
+import type { dashboardStateType } from '../types';
 
 let data:dashboardStateType = [
   {

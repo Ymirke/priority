@@ -52,7 +52,7 @@
       </div>
     {/each}
   </div>
-  {#if column.tasks.length > 0 && page === 'dashboard'}
+  {#if column.tasks.length > 0 && (page === 'dashboard' || page === 'plan')}
     <button on:click={startFocusMode} class="focusButton">
       <div class="buttonContent">
         <p class="noMargin">Focus session</p>

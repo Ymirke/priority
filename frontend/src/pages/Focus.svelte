@@ -1,6 +1,7 @@
-<script>
+<script lang="typescript">
   import { onDestroy } from 'svelte'
   import FocusList from '../components/FocusList.svelte'
+  import CelebratoryGif from '../components/CelebratoryGif.svelte'
 
   import TaskStore from '../stores/tasks'
   import type { dashboardStateType } from '../types'
@@ -88,6 +89,9 @@
 <main class="container">
   <FocusList />
   <button on:click={endFocusMode} class="endearlybutton">End focus session early</button>
+  {#if data[2].tasks.length < 1}
+    <CelebratoryGif />
+  {/if}
 </main>
 
 <style>
@@ -100,7 +104,7 @@
     flex-direction: column;
     align-items: center;
   }
-  .endearlybutton{
+  .endearlybutton {
     padding: 10px;
     border-radius: 5px;
     border: none;
@@ -108,7 +112,7 @@
     color: var(--primary);
     font-style: italic;
   }
-  .endearlybutton:hover{
+  .endearlybutton:hover {
     border: none;
     background-color: var(--primary);
     color: white;
@@ -119,16 +123,19 @@
       width: 100%;
     }
   }
-
   @media (min-width: 991.98px) {
     .container {
       width: 70%;
     }
   }
-
   @media (min-width: 1199.98px) {
     .container {
       width: 60%;
+    }
+  }
+  @media (min-width: 1600px) {
+    .container {
+      width: 40%;
     }
   }
 </style>

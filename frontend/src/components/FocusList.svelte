@@ -63,7 +63,6 @@
     padding-bottom: 5px;
   }
   .column__content {
-    height: 70vh;
     width: 100%;
     overflow-y: scroll;
   }

@@ -1,12 +1,21 @@
 <script>
+  
   const list = 'icons/list-circle.svg'
   const stats = 'icons/stats-chart.svg'
   const github = 'icons/logo-github.svg'
+  
+  import PageStore from '../stores/page';
+  import type { pageType } from 'src/types';
+
+  const goToPlan = () =>  {
+    PageStore.set('plan');
+  }
+  
 </script>
 
 <footer>
   <ul class="footerItems">
-    <li class="footerItem" data-tooltip="Plan your day">
+    <li on:click={goToPlan} class="footerItem" data-tooltip="Plan your day">
       <img
         draggable="false"
         class="invert"

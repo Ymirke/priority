@@ -36,7 +36,7 @@
 
 <label for="taskprogress">
   <progress id="taskprogress" {value} max={totalTasks} />
-  <p>{Math.ceil(value)} done, {tasksLeft} left</p>
+  <p>{Math.floor(value)} done, {tasksLeft} left</p>
 </label>
 
 <style>
@@ -44,8 +44,10 @@
     text-align: center;
   }
   label {
-    width: 100%;
+    width: calc(100% - 10px);
     margin-bottom: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
   }
   progress {
     width: 100%;

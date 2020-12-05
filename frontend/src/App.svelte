@@ -1,46 +1,22 @@
 <script lang="typescript">
   import Dashboard from './pages/Dashboard.svelte'
   import Focus from './pages/Focus.svelte'
-  import Footer from './components/Footer.svelte'
+  import Plan from './pages/Plan.svelte'
 
-  let focusMode = false
-  const startFocusMode: () => void = () => {
-    focusMode = true
-  }
-  const endFocusMode: () => void = () => {
-    focusMode = false
-  }
-
-  const moveItemRight = (columnId: number, taskId: number) => {
-    const columnIndex = data.findIndex((column) => column.id === columnId)
-    const taskIndex = data[columnIndex].tasks.findIndex(
-      (task) => task.id === taskId
-    )
-
-    const removedItems = data[columnIndex].tasks.splice(taskIndex, 1)
-    data[columnIndex + 1].tasks.unshift(removedItems[0])
-
-    data = [...data]
-  }
-
-  const moveItemLeft = (columnId: number, taskId: number) => {
-    const columnIndex = data.findIndex((column) => column.id === columnId)
-    const taskIndex = data[columnIndex].tasks.findIndex(
-      (task) => task.id === taskId
-    )
-
-    const removedItems = data[columnIndex].tasks.splice(taskIndex, 1)
-    data[columnIndex - 1].tasks.unshift(removedItems[0])
-
-    data = [...data]
-  }
+  import PageStore from './stores/page';
+  import type { pageType } from './types';
+  let page: pageType;
+  PageStore.subscribe(pageChange => {
+    page = pageChange;
+  })
 </script>
 
-{#if focusMode}
-  <Focus {endFocusMode} {moveItemRight} />
-{:else}
-  <Dashboard {startFocusMode} />
-  <Footer />
+{#if page === 'dashboard'}
+  <Dashboard />
+{:else if page === 'focus'}
+  <Focus />
+{:else if page === 'plan'}
+  <Plan />
 {/if}
 
 <style>

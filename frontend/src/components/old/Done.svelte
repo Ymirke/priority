@@ -19,8 +19,8 @@
     });
   };
 
-  import Task from './Task.svelte';
-  import { tasks } from '../stores/tasks';
+  import Task from '../Task.svelte';
+  import { tasks } from '../../stores/tasks';
 
   let isOpen = true;
 

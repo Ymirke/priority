@@ -10,3 +10,5 @@ export type columnType = {
 }
 
 export type dashboardStateType = columnType[];
+
+export type pageType = 'dashboard' | 'focus' | 'plan';

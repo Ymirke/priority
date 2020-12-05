@@ -15,7 +15,7 @@
         src={list}
         alt="" />
     </li>
-    <li class="footerItem" data-tooltip="Your stats">
+    <!-- <li class="footerItem" data-tooltip="Your stats">
       <img
         draggable="false"
         class="invert"
@@ -23,8 +23,8 @@
         width="48px"
         src={stats}
         alt="" />
-    </li>
-    <li class="footerItem" data-tooltip="Github">
+    </li> -->
+    <li class="footerItem" data-tooltip="GitHub">
       <a
         href="https://github.com/Ymirke"
         target="_blank"
@@ -53,6 +53,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 20%;
+    min-width: 400px;
     background-color: var(--select);
     display: flex;
     justify-content: space-around;

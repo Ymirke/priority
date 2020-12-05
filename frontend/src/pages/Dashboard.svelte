@@ -1,51 +1,37 @@
 <script lang="typescript">
-  import { flip } from 'svelte/animate';
-  import { dndzone } from 'svelte-dnd-action';
-  import TaskStore from '../stores/tasks';
-  import Task from '../components/Task.svelte';
+  import TaskColumn from '../components/TaskColumn.svelte'
+  import Footer from '../components/Footer.svelte'
 
-  import type { dashboardStateType } from '../types';
-  let data: dashboardStateType;
-
+  import type { dashboardStateType } from '../types'
+  let data: dashboardStateType
+  import TaskStore from '../stores/tasks'
   TaskStore.subscribe((taskData) => {
-    data = taskData;
-  });
+    data = taskData
+  })
 
-  const flipDurationMs = 100;
-  const priority = 'icons/priority.svg';
-  export let startFocusMode: () => void;
-
-  const changeTaskText: (columnId: number, taskId: number) => void = (
-    columnId,
-    taskId
-  ) => {
-    const columnIndex = data.findIndex((column) => column.id === columnId);
-    const taskIndex = data[columnIndex].tasks.findIndex(
-      (task) => task.id === taskId
-    );
-
-    const entry = prompt(
-      'Change Task Text To:',
-      data[columnIndex].tasks[taskIndex].text
-    );
-    if (entry === '' || entry === null) return;
-
-    data[columnIndex].tasks[taskIndex].text = entry;
-    data = [...data];
-  };
-
-  function considerTask(event, columnId: number) {
-    const columnIndex = data.findIndex((column) => column.id === columnId);
-    data[columnIndex].tasks = event.detail.items;
-    data = [...data];
-  }
-
-  function finalizeTask(event, columnId: number) {
-    const columnIndex = data.findIndex((column) => column.id === columnId);
-    data[columnIndex].tasks = event.detail.items;
-    data = [...data];
-  }
+  import type { pageType } from '../types'
+  let page: pageType
+  import PageStore from '../stores/page'
+  PageStore.subscribe((pageChange) => {
+    page = pageChange
+  })
 </script>
+
+<main>
+  <div class="column">
+    <TaskColumn column={data[0]} />
+  </div>
+  <div class="column">
+    <TaskColumn column={data[1]} />
+  </div>
+  <div class="column">
+    <TaskColumn column={data[2]} />
+  </div>
+  <div class="column">
+    <TaskColumn column={data[3]} />
+  </div>
+</main>
+<Footer />
 
 <style>
   main {
@@ -59,53 +45,10 @@
   }
   .column {
     height: auto;
-    width: 25%;
+    width: 100%;
     padding: 7px;
     margin: 15px;
     float: left;
-  }
-  .column__title {
-    font-size: 28px;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: flex-start;
-    margin-left: 25px;
-    align-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
-  .column__content {
-    min-height: 50px;
-    height: 90%;
-    overflow-y: scroll;
-    /* Hide scroll bar */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-  .column__content--today {
-    min-height: 50px;
-    height: auto;
-  }
-  .column__content::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-  }
-  .column__content:focus {
-    outline: none;
-  }
-  .task__container {
-    background-color: var(--dark);
-    margin-top: 1px;
-    margin-bottom: 1px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 5px;
-  }
-  .task__container:hover {
-    background-color: var(--select);
-  }
-  .task__container:focus {
-    box-shadow: 0 0 1px 1px var(--gray);
-    outline: none;
   }
   @media (max-width: 1100px) {
     main {
@@ -116,94 +59,5 @@
     .column {
       width: 80%;
     }
-    .column__content {
-      height: auto;
-      overflow-y: auto;
-      margin: 0;
-      padding: 0;
-    }
-  }
-  .focusButton {
-    margin-top: 30px;
-    background-color: #055ada;
-    border: none;
-    border-radius: 10px;
-    width: 100%;
-    font-size: 2rem;
-    font-weight: 700;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    color: white;
-  }
-  .focusButton:hover {
-    background-color: #066aff; /* This color is really cool */
-    cursor: pointer;
-  }
-  .focusButton:focus{
-    box-shadow: 0 0 1px 5px var(--primary);
-    outline: none;
-  }
-  .buttonImage {
-    filter: invert(1);
-    transform: scaleX(-1);
-    margin-left: 15px;
-  }
-  .buttonContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .noMargin {
-    margin: 0;
   }
 </style>
-
-<main>
-  {#each data as column (column.id)}
-    {#if column.id === 3}
-      <div class="column">
-        <div class="column__title">{column.name}</div>
-        <div
-          class="column__content column__content--today"
-          use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
-          on:consider={(event) => considerTask(event, column.id)}
-          on:finalize={(event) => finalizeTask(event, column.id)}>
-          {#each column.tasks as task (task.id)}
-            <div
-              animate:flip={{ duration: flipDurationMs }}
-              class="task__container">
-              <Task {task} columnId={column.id} />
-            </div>
-          {/each}
-        </div>
-        {#if column.tasks.length > 0}
-          <button on:click={startFocusMode} class="focusButton">
-            <div class="buttonContent">
-              <p class="noMargin">Prioritize</p>
-              <img
-                class="buttonImage"
-                src={priority}
-                height="32px"
-                alt="Priority logo" />
-            </div>
-          </button>
-        {/if}
-      </div>
-    {:else}
-      <div class="column">
-        <div class="column__title">{column.name}</div>
-        <div
-          class="column__content"
-          use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
-          on:consider={(event) => considerTask(event, column.id)}
-          on:finalize={(event) => finalizeTask(event, column.id)}>
-          {#each column.tasks as task (task.id)}
-            <div class="task__container">
-              <Task {task} columnId={column.id} />
-            </div>
-          {/each}
-        </div>
-      </div>
-    {/if}
-  {/each}
-</main>

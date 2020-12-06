@@ -1,4 +1,3 @@
 # Prioritize
 
-Todo:
-* Simplify task state.
+A simple productivity app.

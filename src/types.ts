@@ -1,6 +1,6 @@
 export type taskType = {
   text: string;
-  id: number;
+  id: string;
 }
 
 export type columnType = {

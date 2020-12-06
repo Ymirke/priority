@@ -18,7 +18,7 @@
     tasks = taskChange
   })
 
-  const renameTask: (columnName: string, taskId: number) => void = (
+  const renameTask: (columnName: string, taskId: string) => void = (
     columnName,
     taskId
   ) => {
@@ -31,14 +31,13 @@
       tasks[columnName].tasks[taskIndex].text
     )
     if (newName === null) return
-    
-    if (newName === '') return
+    if (newName === '') return // TODO: should delete task.
 
     tasks[columnName].tasks[taskIndex].text = newName
     TaskStore.set(tasks)
   }
 
-  const taskDone: (columnName: string, taskId: number) => void = (
+  const taskDone: (columnName: string, taskId: string) => void = (
     columnName,
     taskId
   ) => {
@@ -47,8 +46,8 @@
     )
     if (!(taskIndex > -1)) return
     
-    const removedItem = tasks[columnName].tasks.splice(taskIndex, 1)
-    tasks.done.tasks.unshift(removedItem[0])
+    const removedItems = tasks[columnName].tasks.splice(taskIndex, 1)
+    tasks.done.tasks.unshift(removedItems[0])
     TaskStore.set(tasks)
   }
 </script>

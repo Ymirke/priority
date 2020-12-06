@@ -4,7 +4,6 @@
   import Task from './Task.svelte'
   import ProgressBar from './ProgressBar.svelte'
 
-
   import DataStore from '../stores/tasks'
   import type { columnsDataType } from 'src/types'
   let data: columnsDataType
@@ -101,39 +100,6 @@
     box-shadow: 0 0 1px 1px var(--gray);
     outline: none;
   }
-  /* .focusButton {
-    margin-top: 30px;
-    background-color: #055ada;
-    border: none;
-    border-radius: 10px;
-    width: 100%;
-    font-size: 2rem;
-    font-weight: 700;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    color: white;
-  }
-  .focusButton:hover {
-    background-color: #066aff;
-    cursor: pointer;
-  }
-  .focusButton:focus {
-    box-shadow: 0 0 1px 5px var(--primary);
-    outline: none;
-  }
-  .buttonImage {
-    filter: invert(1);
-    transform: scaleX(-1);
-    margin-left: 15px;
-  }
-  .buttonContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .noMargin {
-    margin: 0;
-  } */
   @media (max-width: 1100px) {
     .column__content {
       height: auto;

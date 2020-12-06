@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "snowpack dev",
-    "ci": "",
+    "ci": "npm i",
     "build": "snowpack build",
     "test": "web-test-runner \"src/**/*.test.ts\"",
     "publish-please": "publish-please",

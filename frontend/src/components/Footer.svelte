@@ -5,7 +5,6 @@
   const github = 'icons/logo-github.svg'
   
   import PageStore from '../stores/page';
-  import type { pageType } from 'src/types';
 
   const goToPlan = () =>  {
     PageStore.set('plan');

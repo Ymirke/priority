@@ -30,7 +30,9 @@
       'Rename task',
       tasks[columnName].tasks[taskIndex].text
     )
-    if (newName === '' || newName === null) return
+    if (newName === null) return
+    
+    if (newName === '') return
 
     tasks[columnName].tasks[taskIndex].text = newName
     TaskStore.set(tasks)

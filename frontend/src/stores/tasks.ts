@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable } from './localStorage';
 
 import type { columnsDataType } from '../types';
 
@@ -25,6 +25,6 @@ let data: columnsDataType = {
   },
 }
 
-let TaskStore = writable(data);
+let TaskStore = writable('tasks', data);
 
 export default TaskStore;

@@ -6,4 +6,4 @@ Check it out:
 [Link](https://priority-is.web.app)
 
 
-![priority](https://i.imgur.com/SFmTRqa.gif)
+![priority](https://github.com/Ymirke/priority/blob/main/readme.gif)

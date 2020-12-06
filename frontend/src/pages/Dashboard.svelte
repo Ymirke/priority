@@ -2,8 +2,8 @@
   import TaskColumn from '../components/TaskColumn.svelte'
   import Footer from '../components/Footer.svelte'
 
-  import type { dashboardStateType } from '../types'
-  let data: dashboardStateType
+  import type { columnsDataType } from '../types'
+  let data: columnsDataType
   import TaskStore from '../stores/tasks'
   TaskStore.subscribe((taskData) => {
     data = taskData
@@ -19,16 +19,16 @@
 
 <main>
   <div class="column">
-    <TaskColumn column={data[0]} />
+    <TaskColumn column={data.later} />
   </div>
   <div class="column">
-    <TaskColumn column={data[1]} />
+    <TaskColumn column={data.thisWeek} />
   </div>
   <div class="column">
-    <TaskColumn column={data[2]} />
+    <TaskColumn column={data.today} />
   </div>
   <div class="column">
-    <TaskColumn column={data[3]} />
+    <TaskColumn column={data.done} />
   </div>
 </main>
 <Footer />

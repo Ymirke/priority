@@ -1,7 +1,8 @@
 <script>
   import { gifs, headlines } from '../data/celebration'
-
   import PageStore from '../stores/page'
+
+  export let completedIn: string = '0'
 
   const goToDashboard = () => {
     PageStore.set('dashboard')
@@ -16,6 +17,7 @@
   <section>
     <h2>{getRandomItem(headlines)}</h2>
     <img src={getRandomItem(gifs)} alt="" />
+    <p>You completed all your tasks in: {completedIn}</p>
     <button class="focusButton" on:click={goToDashboard}>Back to the dashboard</button>
   </section>
 </main>
@@ -41,6 +43,7 @@
     height: auto;
   }
   h2 {
+    font-size: 2rem;
     color: white;
     text-align: center;
   }
@@ -48,10 +51,13 @@
     height: auto;
     width: 100%;
   }
+  p{
+    text-align: center;
+    margin-bottom: 30px;
+  }
   .focusButton {
-    margin-top: 40px;
     margin-right: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     margin-left: 30px;
     background-color: #055ada;
     border: none;

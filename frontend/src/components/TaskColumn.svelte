@@ -4,9 +4,12 @@
   import Task from '../components/Task.svelte'
   import CreateTask from '../components/CreateTasks.svelte'
 
+  import type { columnType } from 'src/types'
+  export let column: columnType
+
   import DataStore from '../stores/tasks'
-  import type { dashboardStateType } from 'src/types'
-  let data: dashboardStateType
+  import type { columnsDataType } from 'src/types'
+  let data: columnsDataType
   DataStore.subscribe((dataChange) => {
     data = dataChange
   })
@@ -23,34 +26,27 @@
   const priority = 'icons/priority.svg'
   const flipDurationMs = 100
 
-  // TODO: Replace this with new data structure
-  import type { columnType } from 'src/types'
-  export let column: columnType
-
-  // TODO: Re-write this with new state structure.
-  const considerTask = (event, columnId: number) => {
-    const columnIndex = data.findIndex((column) => column.id === columnId)
-    data[columnIndex].tasks = event.detail.items
+  const considerTask = (event: any, columnName: string) => {
+    data[columnName].tasks = event.detail.items;
     DataStore.set(data)
   }
-  const finalizeTask = (event, columnId: number) => {
-    const columnIndex = data.findIndex((column) => column.id === columnId)
-    data[columnIndex].tasks = event.detail.items
+  const finalizeTask = (event: any, columnName: string) => {
+    data[columnName].tasks = event.detail.items;
     DataStore.set(data)
   }
 </script>
 
-{#if column.id === 3}
+{#if column.columnName === 'today'}
   <div class="column__title">{column.name}</div>
   <CreateTask />
   <div
     class="column__content column__content--today"
     use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
-    on:consider={(event) => considerTask(event, column.id)}
-    on:finalize={(event) => finalizeTask(event, column.id)}>
+    on:consider={(event) => considerTask(event, column.columnName)}
+    on:finalize={(event) => finalizeTask(event, column.columnName)}>
     {#each column.tasks as task (task.id)}
       <div animate:flip={{ duration: flipDurationMs }} class="task__container">
-        <Task {task} columnId={column.id} />
+        <Task {task} columnName={column.columnName} />
       </div>
     {/each}
   </div>
@@ -72,11 +68,11 @@
   <div
     class="column__content"
     use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
-    on:consider={(event) => considerTask(event, column.id)}
-    on:finalize={(event) => finalizeTask(event, column.id)}>
+    on:consider={(event) => considerTask(event, column.columnName)}
+    on:finalize={(event) => finalizeTask(event, column.columnName)}>
     {#each column.tasks as task (task.id)}
       <div class="task__container">
-        <Task {task} columnId={column.id} />
+        <Task {task} columnName={column.columnName} />
       </div>
     {/each}
   </div>

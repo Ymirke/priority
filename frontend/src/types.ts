@@ -4,11 +4,16 @@ export type taskType = {
 }
 
 export type columnType = {
-  id: number;
+  columnName: string;
   name: string;
   tasks: taskType[];
 }
 
-export type dashboardStateType = columnType[];
+export type columnsDataType = {
+  later: columnType,
+  thisWeek: columnType,
+  today: columnType,
+  done: columnType,
+}
 
 export type pageType = 'dashboard' | 'focus' | 'plan';

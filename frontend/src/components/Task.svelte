@@ -1,51 +1,62 @@
 <script lang="typescript">
-  import type { taskType } from 'src/types'
+  import type { taskType, pageType, columnsDataType } from 'src/types'
 
-  export let columnId: number
-  export let task: taskType
-  const renameTask: (colId: number, taskId: number) => void = (
-    colId,
-    taskId
-  ) => {
-    console.log('rename task', colId, taskId);
-  }
   const check = 'icons/check.svg'
 
+  export let columnName: string
+  export let task: taskType
+
   import PageStore from '../stores/page'
-  import type { pageType } from '../types'
   let page: pageType
   PageStore.subscribe((pageUpdate) => {
     page = pageUpdate
   })
 
   import TaskStore from '../stores/tasks'
-  import type { dashboardStateType } from '../types'
-  let tasks: dashboardStateType
+  let tasks: columnsDataType
   TaskStore.subscribe((taskChange) => {
     tasks = taskChange
   })
 
-  const taskDone: (columnId: number, taskId: number) => void = (
-    columnId,
+  const renameTask: (columnName: string, taskId: number) => void = (
+    columnName,
     taskId
   ) => {
-    const taskIndex = tasks[columnId - 1].tasks.findIndex(
-      (task) => task.id === taskId
+    const taskIndex = tasks[columnName].tasks.findIndex(
+      (task: taskType) => task.id === taskId
     )
     if (!(taskIndex > -1)) return
+    const newName = prompt(
+      'Re-name task',
+      tasks[columnName].tasks[taskIndex].text
+    )
+    if (newName === '' || newName === null) return
 
-    const removedItem = tasks[columnId - 1].tasks.splice(taskIndex, 1)
+    tasks[columnName].tasks[taskIndex].text = newName
 
-    tasks[3].tasks.unshift(removedItem[0])
+    TaskStore.set(tasks)
+  }
 
+  const taskDone: (columnName: string, taskId: number) => void = (
+    columnName,
+    taskId
+  ) => {
+    const taskIndex = tasks[columnName].tasks.findIndex(
+      (task: taskType) => task.id === taskId
+    )
+    if (!(taskIndex > -1)) return
+    const removedItem = tasks[columnName].tasks.splice(taskIndex, 1)
+    tasks.done.tasks.unshift(removedItem[0])
     TaskStore.set(tasks)
   }
 </script>
 
-<div on:click={() => renameTask(columnId, task.id)} class="task">
+<div on:click={() => renameTask(columnName, task.id)} class="task">
   <p class="task__text">{task.text}</p>
   {#if page === 'focus'}
-    <button on:click={() => taskDone(columnId, task.id)} class="task__button">
+    <button
+      on:click|stopPropagation={() => taskDone(columnName, task.id)}
+      class="task__button">
       <img src={check} class="check" height="24px" width="24px" alt="" />
     </button>
   {/if}

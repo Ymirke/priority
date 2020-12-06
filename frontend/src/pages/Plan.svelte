@@ -2,8 +2,8 @@
   import TaskColumn from '../components/TaskColumn.svelte'
 
   import TaskStore from '../stores/tasks'
-  import type { dashboardStateType } from 'src/types'
-  let data: dashboardStateType
+  import type { columnsDataType } from 'src/types'
+  let data: columnsDataType
   TaskStore.subscribe((dataChange) => {
     data = dataChange
   })
@@ -12,10 +12,10 @@
 <p>Which tasks do you want to get done today?</p>
 <main>
   <div class="column">
-    <TaskColumn column={data[1]} />
+    <TaskColumn column={data.thisWeek} />
   </div>
   <div class="column">
-    <TaskColumn column={data[2]} />
+    <TaskColumn column={data.today} />
   </div>
 </main>
 

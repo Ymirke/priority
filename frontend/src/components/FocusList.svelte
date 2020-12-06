@@ -1,51 +1,49 @@
 <script>
+  import { onMount } from 'svelte'
   import { dndzone } from 'svelte-dnd-action'
   import Task from './Task.svelte'
   import ProgressBar from './ProgressBar.svelte'
 
-  import { onMount } from 'svelte'
 
   import DataStore from '../stores/tasks'
-  import type { dashboardStateType } from 'src/types'
-  let data: dashboardStateType
+  import type { columnsDataType } from 'src/types'
+  let data: columnsDataType
   DataStore.subscribe((dataChange) => {
     data = dataChange
   })
 
   let totalTasks: number
   onMount(() => {
-    totalTasks = data[2].tasks.length
+    totalTasks = data.today.tasks.length
   })
 
   const flipDurationMs = 200
-  // TODO: Re-write this with new state structure.
-  const considerTask = (event, columnId: number) => {
-    const columnIndex = data.findIndex((column) => column.id === columnId)
-    data[columnIndex].tasks = event.detail.items
+  
+  const considerTask = (event: any, columnName: string) => {
+    data[columnName].tasks = event.detail.items;
     DataStore.set(data)
   }
-  const finalizeTask = (event, columnId: number) => {
-    const columnIndex = data.findIndex((column) => column.id === columnId)
-    data[columnIndex].tasks = event.detail.items
+  const finalizeTask = (event: any, columnName: string) => {
+    data[columnName].tasks = event.detail.items;
     DataStore.set(data)
   }
 </script>
 
-<div class="column__title">{data[2].name}</div>
+<div class="column__title">{data.today.name}</div>
 <ProgressBar {totalTasks} />
 <div
   class="column__content"
-  use:dndzone={{ items: data[2].tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
-  on:consider={(event) => considerTask(event, data[2].id)}
-  on:finalize={(event) => finalizeTask(event, data[2].id)}>
-  {#each data[2].tasks as task (task.id)}
-    {#if data[2].tasks[0] === task}
+  use:dndzone={{ items: data.today.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
+  on:consider={(event) => considerTask(event, data.today.columnName)}
+  on:finalize={(event) => finalizeTask(event, data.today.columnName)}>
+  {#each data.today.tasks as task (task.id)}
+    {#if data.today.tasks[0] === task}
       <div class="task__container--highlight">
-        <Task {task} columnId={data[2].id} />
+        <Task {task} columnName={data.today.columnName} />
       </div>
     {:else}
       <div class="task__container">
-        <Task {task} columnId={data[2].id} />
+        <Task {task} columnName={data.today.columnName} />
       </div>
     {/if}
   {/each}
@@ -103,7 +101,7 @@
     box-shadow: 0 0 1px 1px var(--gray);
     outline: none;
   }
-  .focusButton {
+  /* .focusButton {
     margin-top: 30px;
     background-color: #055ada;
     border: none;
@@ -116,7 +114,7 @@
     color: white;
   }
   .focusButton:hover {
-    background-color: #066aff; /* This color is really cool */
+    background-color: #066aff;
     cursor: pointer;
   }
   .focusButton:focus {
@@ -135,7 +133,7 @@
   }
   .noMargin {
     margin: 0;
-  }
+  } */
   @media (max-width: 1100px) {
     .column__content {
       height: auto;

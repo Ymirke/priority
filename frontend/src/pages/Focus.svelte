@@ -4,8 +4,8 @@
   import CelebratoryGif from '../components/CelebratoryGif.svelte'
 
   import TaskStore from '../stores/tasks'
-  import type { dashboardStateType } from '../types'
-  let data: dashboardStateType
+  import type { columnsDataType } from '../types'
+  let data: columnsDataType
   TaskStore.subscribe((taskData) => {
     data = taskData
   })
@@ -21,6 +21,7 @@
   let displayTime = ''
 
   const getDisplayTime: () => void = () => {
+    if (data.today.tasks.length < 1) return clearInterval(interval)
     const hours = Math.floor(seconds / (60 * 60))
     const minutes = Math.floor((seconds % (60 * 60)) / 60)
     const secs = Math.ceil((seconds % (60 * 60)) % 60)
@@ -39,37 +40,16 @@
       if (hours > 9) return hours.toString()
       return `0${hours.toString()}`
     }
-
-    const base = 'Priority - '
+    
     if (seconds < 60) {
-      return (displayTime = `${base}${displayHours()}:${displayMinutes()}:${displaySeconds()}`)
+      return (displayTime = `${displayHours()}:${displayMinutes()}:${displaySeconds()}`)
     }
 
     displayTime = `${displayHours()}:${displayMinutes()}`
   }
 
   $: seconds, getDisplayTime()
-  $: displayTime, (document.title = `${displayTime}`)
-
-  // TODO: Change this to new state structure
-  const renameTask: (columnId: number, taskId: number) => void = (
-    columnId,
-    taskId
-  ) => {
-    const columnIndex = data.findIndex((column) => column.id === columnId)
-    const taskIndex = data[columnIndex].tasks.findIndex(
-      (task) => task.id === taskId
-    )
-
-    const entry = prompt(
-      'Change Task Text To:',
-      data[columnIndex].tasks[taskIndex].text
-    )
-    if (entry === '' || entry === null) return
-
-    data[columnIndex].tasks[taskIndex].text = entry
-    data = [...data]
-  }
+  $: displayTime, (document.title = `Priority - ${displayTime}`)
 
   const endFocusMode = () => {
     PageStore.set('dashboard')
@@ -89,8 +69,8 @@
 <main class="container">
   <FocusList />
   <button on:click={endFocusMode} class="endearlybutton">End focus session early</button>
-  {#if data[2].tasks.length < 1}
-    <CelebratoryGif />
+  {#if data.today.tasks.length < 1}
+    <CelebratoryGif completedIn={displayTime} />
   {/if}
 </main>
 

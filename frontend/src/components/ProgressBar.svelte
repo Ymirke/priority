@@ -1,6 +1,7 @@
 <script>
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
+  import type { columnsDataType } from '../types'
 
   let ValueStore = tweened(0, {
     duration: 1000,
@@ -14,15 +15,14 @@
   export let totalTasks: number
 
   import TasksStore from '../stores/tasks'
-  import type { dashboardStateType } from '../types'
-  let tasks: dashboardStateType
+  let tasks: columnsDataType
   TasksStore.subscribe((taskChange) => {
     tasks = taskChange
   })
 
   let tasksLeft: number
   const assignTasksLeft = () => {
-    tasksLeft = tasks[2].tasks.length
+    tasksLeft = tasks.today.tasks.length
   }
   const assignValue = () => {
     if (totalTasks) {

@@ -31,7 +31,7 @@
     justify-content: center;
   }
   section {
-    margin-top: 175px;
+    margin-top: 10vh;
     margin-bottom: auto;
     display: flex;
     flex-direction: column;

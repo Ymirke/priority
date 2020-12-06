@@ -19,7 +19,6 @@
   </div>
 </main>
 
-
 <style>
   p {
     text-align: center;

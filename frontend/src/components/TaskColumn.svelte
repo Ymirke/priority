@@ -2,6 +2,7 @@
   import { flip } from 'svelte/animate'
   import { dndzone } from 'svelte-dnd-action'
   import Task from '../components/Task.svelte'
+  import CreateTask from '../components/CreateTasks.svelte'
 
   import DataStore from '../stores/tasks'
   import type { dashboardStateType } from 'src/types'
@@ -41,6 +42,7 @@
 
 {#if column.id === 3}
   <div class="column__title">{column.name}</div>
+  <CreateTask />
   <div
     class="column__content column__content--today"
     use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
@@ -55,7 +57,7 @@
   {#if column.tasks.length > 0 && (page === 'dashboard' || page === 'plan')}
     <button on:click={startFocusMode} class="focusButton">
       <div class="buttonContent">
-        <p class="noMargin">Focus session</p>
+        <p class="noMargin">Focus</p>
         <img
           class="buttonImage"
           src={priority}
@@ -66,6 +68,7 @@
   {/if}
 {:else}
   <div class="column__title">{column.name}</div>
+  <CreateTask />
   <div
     class="column__content"
     use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
@@ -92,14 +95,13 @@
   }
   .column__content {
     color: white;
-    height: 70vh;
+    height: auto;
+    min-height: 80px;
     width: 100%;
     overflow-y: scroll;
   }
   .column__content--today {
-    min-height: 80px;
-    height: auto;
-    max-height: 70vh;
+    max-height: 55vh;
   }
   .column__content:focus {
     outline: none;
@@ -108,7 +110,7 @@
     width: 10px;
   }
   .column__content::-webkit-scrollbar-thumb {
-    background: var(--select); 
+    background: var(--select);
     border-radius: 5px;
   }
   .task__container {
@@ -158,6 +160,7 @@
   }
   .noMargin {
     margin: 0;
+    user-select: none;
   }
   @media (max-width: 1100px) {
     .column__content {

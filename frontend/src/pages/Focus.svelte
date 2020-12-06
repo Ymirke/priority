@@ -114,8 +114,6 @@
   }
   .endearlybutton:hover {
     border: none;
-    background-color: var(--primary);
-    color: white;
     cursor: pointer;
   }
   @media (min-width: 767.98px) {

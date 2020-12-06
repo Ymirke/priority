@@ -1,4 +1,4 @@
-<script>
+<script lang="typescript">
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
   import type { columnsDataType } from '../types'

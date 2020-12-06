@@ -1,15 +1,40 @@
-<script>
+<script lang="typescript">
+  import { v4 as uuid } from 'uuid';
   const plusIcon = 'icons/add-circle.svg'
 
-  let value: string = '';
+  export let columnName: 'string';
+
+  import TaskStore from '../stores/tasks'
+  import type { columnsDataType } from '../types'
+  let data: columnsDataType
+  TaskStore.subscribe((taskChange) => {
+    data = taskChange
+  })
+
+  let value: string = ''
 
   const submit = () => {
-    console.log(value)
+    const newTask = {
+      id: uuid(),
+      text: value,
+    }
+
+    data[columnName].tasks.unshift(newTask);
+
+    TaskStore.set(data);
+
+    value = '';
   }
+
+  const handleKeyup = () => {
+		if (event.code == 'Enter') {
+			submit();
+		}
+	}
 </script>
 
 <div>
-  <input bind:value type="text" placeholder="Add task" />
+  <input bind:value on:keyup|preventDefault={handleKeyup} type="text" placeholder="Add task" />
   {#if value !== ''}
     <button on:click={submit}>
       <img

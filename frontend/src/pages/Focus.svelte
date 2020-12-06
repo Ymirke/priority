@@ -68,7 +68,7 @@
 
 <main class="container">
   <FocusList />
-  <button on:click={endFocusMode} class="endearlybutton">End focus session early</button>
+  <button on:click={endFocusMode} class="endearlybutton">End priority session early</button>
   {#if data.today.tasks.length < 1}
     <CelebratoryGif completedIn={displayTime} />
   {/if}

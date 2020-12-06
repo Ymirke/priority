@@ -1,4 +1,4 @@
-<script>
+<script lang="typescript">
   import TaskColumn from '../components/TaskColumn.svelte'
 
   import TaskStore from '../stores/tasks'

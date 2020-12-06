@@ -1,4 +1,4 @@
-<script>
+<script lang="typescript">
   import { onMount } from 'svelte'
   import { dndzone } from 'svelte-dnd-action'
   import Task from './Task.svelte'

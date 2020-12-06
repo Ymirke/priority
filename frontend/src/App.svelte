@@ -22,9 +22,9 @@
 <style>
   :global(body) {
     box-sizing: border-box;
-    --dark: #181B1E;
+    --dark: rgb(21, 21, 22);
     --gray: rgb(84, 87, 100);
-    --select: rgb(21, 21, 22);
+    --select: rgb(24, 27, 30);
     --primary: #066aff;
     margin: 0;
     background-color: var(--dark);

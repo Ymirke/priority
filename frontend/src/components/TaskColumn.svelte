@@ -1,4 +1,4 @@
-<script>
+<script lang="typescript">
   import { flip } from 'svelte/animate'
   import { dndzone } from 'svelte-dnd-action'
   import Task from '../components/Task.svelte'
@@ -38,7 +38,7 @@
 
 {#if column.columnName === 'today'}
   <div class="column__title">{column.name}</div>
-  <CreateTask />
+  <CreateTask columnName={column.columnName}/>
   <div
     class="column__content column__content--today"
     use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
@@ -53,7 +53,7 @@
   {#if column.tasks.length > 0 && (page === 'dashboard' || page === 'plan')}
     <button on:click={startFocusMode} class="focusButton">
       <div class="buttonContent">
-        <p class="noMargin">Focus</p>
+        <p class="noMargin">Priority</p>
         <img
           class="buttonImage"
           src={priority}
@@ -64,7 +64,7 @@
   {/if}
 {:else}
   <div class="column__title">{column.name}</div>
-  <CreateTask />
+  <CreateTask columnName={column.columnName}/>
   <div
     class="column__content"
     use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}

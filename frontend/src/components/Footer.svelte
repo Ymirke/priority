@@ -1,4 +1,4 @@
-<script>
+<script lang="typescript">
   
   const list = 'icons/list-circle.svg'
   const stats = 'icons/stats-chart.svg'

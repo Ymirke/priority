@@ -27,13 +27,12 @@
     )
     if (!(taskIndex > -1)) return
     const newName = prompt(
-      'Re-name task',
+      'Rename task',
       tasks[columnName].tasks[taskIndex].text
     )
     if (newName === '' || newName === null) return
 
     tasks[columnName].tasks[taskIndex].text = newName
-
     TaskStore.set(tasks)
   }
 
@@ -45,6 +44,7 @@
       (task: taskType) => task.id === taskId
     )
     if (!(taskIndex > -1)) return
+    
     const removedItem = tasks[columnName].tasks.splice(taskIndex, 1)
     tasks.done.tasks.unshift(removedItem[0])
     TaskStore.set(tasks)

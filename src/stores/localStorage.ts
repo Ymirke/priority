@@ -1,6 +1,6 @@
 import {writable as internal, get} from 'svelte/store'
 
-export function writable(key, initialValue) {
+export function writable(key: string, initialValue: any) {
   const store = internal(initialValue)
   const {subscribe, set} = store
   const json = localStorage.getItem(key)
@@ -10,11 +10,11 @@ export function writable(key, initialValue) {
   }
   
   return {
-    set(value) {
+    set(value: any) {
       localStorage.setItem(key, JSON.stringify(value))
       set(value)
     },
-    update(cb) {
+    update(cb:(store:any) => void) {
       const value = cb(get(store))
       this.set(value)
     },

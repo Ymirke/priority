@@ -1,15 +1,13 @@
 <script lang="typescript">
-  
   const list = 'icons/list-circle.svg'
   const stats = 'icons/stats-chart.svg'
   const github = 'icons/logo-github.svg'
-  
-  import PageStore from '../stores/page';
 
-  const goToPlan = () =>  {
-    PageStore.set('plan');
+  import PageStore from '../stores/page'
+
+  const goToPlan = () => {
+    PageStore.set('plan')
   }
-  
 </script>
 
 <footer>
@@ -51,12 +49,18 @@
 
 <style>
   footer {
-    position: sticky;
+    position: absolute;
     width: 100%;
-    margin-bottom: 15px;
+    bottom: 2rem;
+  }
+  @media (max-width: 1100px) {
+    footer {
+      bottom: 2rem;
+      position: sticky;
+    }
   }
   .footerItems {
-    padding: 1rem;
+    padding: 15px;
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;

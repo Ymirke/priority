@@ -2,7 +2,7 @@
   import { flip } from 'svelte/animate'
   import { dndzone } from 'svelte-dnd-action'
   import Task from '../components/Task.svelte'
-  import CreateTask from '../components/CreateTasks.svelte'
+  import CreateTasks from '../components/CreateTasks.svelte'
 
   import type { columnType } from 'src/types'
   export let column: columnType
@@ -30,6 +30,7 @@
     data[columnName].tasks = event.detail.items;
     DataStore.set(data)
   }
+
   const finalizeTask = (event: any, columnName: string) => {
     data[columnName].tasks = event.detail.items;
     DataStore.set(data)
@@ -37,8 +38,8 @@
 </script>
 
 {#if column.columnName === 'today'}
-  <div class="column__title">{column.name}</div>
-  <CreateTask columnName={column.columnName}/>
+  <h3 class="column__title">{column.name}</h3>
+  <CreateTasks columnName={column.columnName}/>
   <div
     class="column__content column__content--today"
     use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
@@ -52,10 +53,10 @@
   </div>
   {#if column.tasks.length > 0 && (page === 'dashboard' || page === 'plan')}
     <button on:click={startFocusMode} class="focusButton">
-      <div class="buttonContent">
-        <p class="noMargin">Priority</p>
+      <div class="focusButton__content">
+        <p class="focusButton__text">Priority</p>
         <img
-          class="buttonImage"
+          class="focusButton__icon"
           src={priority}
           height="32px"
           alt="Priority logo" />
@@ -63,8 +64,8 @@
     </button>
   {/if}
 {:else}
-  <div class="column__title">{column.name}</div>
-  <CreateTask columnName={column.columnName}/>
+  <h3 class="column__title">{column.name}</h3>
+  <CreateTasks columnName={column.columnName}/>
   <div
     class="column__content"
     use:dndzone={{ items: column.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
@@ -95,8 +96,6 @@
     min-height: 80px;
     width: 100%;
     overflow-y: scroll;
-  }
-  .column__content--today {
     max-height: 55vh;
   }
   .column__content:focus {
@@ -137,24 +136,24 @@
     color: white;
   }
   .focusButton:hover {
-    background-color: #066aff; /* This color is really cool */
+    background-color: #066aff;
     cursor: pointer;
   }
   .focusButton:focus {
     box-shadow: 0 0 1px 5px var(--primary);
     outline: none;
   }
-  .buttonImage {
+  .focusButton__icon {
     filter: invert(1);
     transform: scaleX(-1);
     margin-left: 15px;
   }
-  .buttonContent {
+  .focusButton__content {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .noMargin {
+  .focusButton__text {
     margin: 0;
     user-select: none;
   }

@@ -1,8 +1,8 @@
 <script lang="typescript">
-  import { v4 as uuid } from 'uuid';
+  import { v4 as uuid } from 'uuid'
   const plusIcon = 'icons/add-circle.svg'
 
-  export let columnName: 'string';
+  export let columnName: string;
 
   import TaskStore from '../stores/tasks'
   import type { columnsDataType } from '../types'
@@ -14,35 +14,32 @@
   let value: string = ''
 
   const submit = () => {
+    if (value === '') return;
     const newTask = {
       id: uuid(),
       text: value,
     }
-
-    data[columnName].tasks.unshift(newTask);
-
-    TaskStore.set(data);
-
-    value = '';
+    data[columnName].tasks.unshift(newTask)
+    TaskStore.set(data)
+    value = ''
   }
 
-  const handleKeyup = () => {
-		if (event.code == 'Enter') {
-			submit();
-		}
-	}
+  const handleKeyup = (event: KeyboardEvent) => {
+    if (event.code == 'Enter') {
+      submit()
+    }
+  }
 </script>
 
 <div>
-  <input bind:value on:keyup|preventDefault={handleKeyup} type="text" placeholder="Add task" />
+  <input
+    bind:value
+    on:keyup|preventDefault={handleKeyup}
+    type="text"
+    placeholder="Add task" />
   {#if value !== ''}
     <button on:click={submit}>
-      <img
-        src={plusIcon}
-        class="buttonIcon"
-        width="24px"
-        height="24px"
-        alt="plus symbol" />
+      <img src={plusIcon} width="24px" height="24px" alt="plus symbol" />
     </button>
   {/if}
 </div>
@@ -70,7 +67,7 @@
     background-color: var(--dark);
     border: none;
   }
-  .buttonIcon {
+  img {
     filter: invert(1);
   }
 </style>

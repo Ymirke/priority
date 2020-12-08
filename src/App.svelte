@@ -26,6 +26,7 @@
     --gray: rgb(84, 87, 100);
     --select: rgb(24, 27, 30);
     --primary: #066aff;
+    --secondary: #00bb22;
     margin: 0;
     background-color: var(--dark);
     color: var(--gray);

@@ -28,10 +28,10 @@
   }
 </script>
 
-<div class="column__title">{data.today.name}</div>
+<h3>{data.today.name}</h3>
 <ProgressBar {totalTasks} />
 <div
-  class="column__content"
+  class="focus__list"
   use:dndzone={{ items: data.today.tasks, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
   on:consider={(event) => considerTask(event, data.today.columnName)}
   on:finalize={(event) => finalizeTask(event, data.today.columnName)}>
@@ -49,7 +49,7 @@
 </div>
 
 <style>
-  .column__title {
+  h3 {
     font-size: 28px;
     margin-bottom: 1rem;
     display: flex;
@@ -59,17 +59,17 @@
     padding-top: 5px;
     padding-bottom: 5px;
   }
-  .column__content {
+  .focus__list {
     width: 100%;
     overflow-y: scroll;
   }
-  .column__content:focus {
+  .focus__list:focus {
     outline: none;
   }
-  .column__content::-webkit-scrollbar {
+  .focus__list::-webkit-scrollbar {
     width: 10px;
   }
-  .column__content::-webkit-scrollbar-thumb {
+  .focus__list::-webkit-scrollbar-thumb {
     background: var(--select);
     border-radius: 5px;
   }
@@ -81,18 +81,6 @@
     margin-right: 5px;
     border-radius: 5px;
   }
-  .task__container--highlight {
-    color: white;
-    background-color: var(--primary);
-    margin-top: 1px;
-    margin-bottom: 1px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 5px;
-  }
-  .task__container--highlight:hover {
-    background-color: var(--primary) !important;
-  }
   .task__container:hover {
     background-color: var(--select);
   }
@@ -100,8 +88,25 @@
     box-shadow: 0 0 1px 1px var(--gray);
     outline: none;
   }
+  .task__container--highlight {
+    color: white;
+    background-color: var(--light);
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+  }
+  .task__container--highlight:hover {
+    background-color: var(--select);
+  }
+  .task__container--highlight:focus {
+    box-shadow: 0 0 1px 1px var(--gray);
+    outline: none;
+  }
+
   @media (max-width: 1100px) {
-    .column__content {
+    .focus__list {
       height: auto;
       overflow-y: auto;
       margin: 0;

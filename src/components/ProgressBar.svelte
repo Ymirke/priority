@@ -36,7 +36,7 @@
 
 <label for="taskprogress">
   <progress id="taskprogress" {value} max={totalTasks} />
-  <p>{Math.floor(value)} done, {tasksLeft} left</p>
+  <p>{Math.round(value)} done, {tasksLeft} left</p>
 </label>
 
 <style>

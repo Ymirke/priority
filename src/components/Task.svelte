@@ -58,7 +58,7 @@
     <button
       on:click|stopPropagation={() => taskDone(columnName, task.id)}
       class="task__button">
-      <img src={check} class="check" height="24px" width="24px" alt="" />
+      <img src={check} class="task__buttonCheck" height="24px" width="24px" alt="" />
     </button>
   {/if}
 </div>
@@ -89,17 +89,17 @@
     border: none;
     padding: 5px 10px 5px 10px;
     border-radius: 5px;
-    background-color: rgb(0, 0, 0);
+    background-color: var(--gray);
   }
   .task__button:hover {
-    filter: invert(1);
+    background-color: var(--secondary);
     cursor: pointer;
   }
   .task__button:focus {
     box-shadow: 0 0 1px 1px var(--gray);
     outline: none;
   }
-  .check {
+  .task__buttonCheck {
     justify-content: flex-end;
     filter: invert(1);
   }
